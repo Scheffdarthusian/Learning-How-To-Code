@@ -11,7 +11,8 @@ The second line contains the elements of the array separated by spaces.
 The array always has at least two elements.
 
 
-**Solution:**
+
+Solution:
 
 import java.util.Scanner;
 
