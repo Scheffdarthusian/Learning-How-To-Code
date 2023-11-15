@@ -1,1 +1,1 @@
-Things I have learned from FreeCodeCamp and Hyperskills. They are basically small projects.
+Marking down things I have learned from FreeCodeCamp and Hyperskills. They are basically small projects and solutions I wrote or slutions that I found smart or interesting.
