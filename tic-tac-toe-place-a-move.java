@@ -194,15 +194,18 @@ public class Main {
     private static void placeMove(char[][] board, Scanner scanner) {
         while (true) {
             System.out.println("Enter your move: ");
-            int row = scanner.nextInt();
-            int col = scanner.nextInt();
+            try {
+                int row = scanner.nextInt();
+                int col = scanner.nextInt();
 
-            if (isValidMove(row, col, scanner, board)) {
-                board[row - 1][col - 1] = 'X';
-                printBoard(board);
-                break;
-            } else {
-                System.out.println("Invalid move. Please try again.");
+                if (isValidMove(row, col, board)) {
+                    board[row - 1][col - 1] = 'X';
+                    printBoard(board);
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("You should enter numbers!");
+                scanner.reset();
             }
         }
     }
@@ -214,10 +217,6 @@ public class Main {
         }
         if (board[row - 1][col - 1] != '_') {
             System.out.println("This cell is occupied! Choose another one!");
-            return false;
-        }
-        if (!scanner.hasNextInt()) {
-            System.out.println("You should enter numbers!");
             return false;
         }
         return true;
