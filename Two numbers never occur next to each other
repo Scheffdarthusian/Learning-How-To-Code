@@ -1,3 +1,4 @@
+/*
 Write a program that reads an array of integers and two numbers n and m. The program must check that n and m never occur next to each other (in any order) in the array.
 
 Input data format
@@ -16,6 +17,8 @@ The result is a single boolean value true if n and m never occur next to each ot
 
 
 Solution:
+*/
+
 import java.util.Scanner;
 
 class Main {
