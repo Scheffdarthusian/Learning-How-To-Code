@@ -1,3 +1,4 @@
+/*
 The maximum product of adjacent elements
 
 Write a program that reads an array of ints and outputs the maximum product of two adjacent elements in the given array of non-negative numbers.
@@ -9,10 +10,10 @@ The first line of the input contains the number of elements in the array.
 The second line contains the elements of the array separated by spaces.
 
 The array always has at least two elements.
+*/
 
 
-
-Solution:
+/Solution:/
 
 import java.util.Scanner;
 
