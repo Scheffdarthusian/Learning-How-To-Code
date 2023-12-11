@@ -13,7 +13,7 @@ The array always has at least two elements.
 */
 
 
-/Solution:/
+//Solution:
 
 import java.util.Scanner;
 
