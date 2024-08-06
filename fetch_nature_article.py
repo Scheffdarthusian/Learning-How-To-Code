@@ -2,22 +2,43 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def talk_to_internet(url):
+def fetch_nature_article(url):
+    #Check if the URL is a valid nature.com article link
     if not url.startswith('https://www.nature.com/articles/'):
-        return 'Invalid page!'
+        return 'Invalid page'
+
     try:
-        r = requests.get(url_input,  headers={'Accept-Language': 'en-US,en;q=0.5'})
-        soup = BeautifulSoup(r.content, 'html.parser')
+        #Send the HTTP request with the required headers
+        headers = {'Accept-Language': 'en-US,en;q=0.5'}
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
 
+        #Parse the webpage content
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        #Extract the title and description
         title = soup.find('title').text.strip()
-        description = soup.find('meta', {'name': 'description'}).get('content').strip()
-        if not title or not description:
-            return 'Invalid page!'
+        description_tag = soup.find('meta', {'name': 'description'})
 
-        return {'Title': title, 'Description': description}
+        if not title or not description_tag:
+            return 'Invalid page'
+
+        description = description_tag.get('content').strip()
+        return {'title': title, 'description': description}
+
+    except requests.exceptions.RequestException as e:
+        return f'Http Error: {e}'
     except Exception as e:
-        return 'Invalid page!'
+        return f'Error: {e}'
 
 
-url_input = input('Input the URL:\n')
-print(talk_to_internet(url_input))
+def main():
+    url_input: str = input('Input the URl:\n')
+    print(fetch_nature_article(url_input))
+
+
+if __name__ == '__main__':
+    main()
+
+
+
