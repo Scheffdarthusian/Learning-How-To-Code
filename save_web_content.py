@@ -1,15 +1,22 @@
 import requests
 
 
-def save_web_content(url):
+def fetch_web_content(url: str) -> str:
     response = requests.get(url)
     if response.status_code == 200:
+        save_file(response)
+        return 'Content saved.'
+    else:
+        return f'The URL returned {response.status_code}'
+
+
+def save_file(response):
+    try:
         with open('source.html', 'wb') as f:
             f.write(response.content)
-            print('Content saved')
-    else:
-        print(f'The URL returned {response.status_code}')
+    except Exception as e:
+        return e
 
 
 url_input: str = input('Input the URL:\n')
-save_web_content(url_input)
+print(fetch_web_content(url_input))
