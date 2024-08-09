@@ -24,26 +24,29 @@ def scrap_nature_news(url: str):
 
     for article in all_articles:
         # Find the article type
-        article_link = article.find('a', {'data-track-action': 'view article'})
-        if article_link:
-            full_article_url = 'https://www.nature.com' + article_link['href']
+        article_type = article.find('span', class_='c-meta__type')
+        if article_type and article_type.text.strip() == 'News':
+            article_link = article.find('a', {'data-track-action': 'view article'})
+            if article_link:
+                full_article_url = 'https://www.nature.com' + article_link['href']
 
-            # Send a request to the full article page
-            full_article_response = requests.get(full_article_url,
-                                                 headers={'Accept-Language': 'en-US,en;q=0.5'})
-            full_article_response.raise_for_status()
+                # Send a request to the full article page
+                full_article_response = requests.get(full_article_url,
+                                                     headers={'Accept-Language': 'en-US,en;q=0.5'})
+                full_article_response.raise_for_status()
 
-            # Parse the article page
-            full_article_soup = BeautifulSoup(full_article_response.content, 'html.parser')
+                # Parse the article page
+                full_article_soup = BeautifulSoup(full_article_response.content, 'html.parser')
 
-            # Find the element with the class 'article-teaser'
-            article_teaser = full_article_soup.find('p', class_='article__teaser')
-            if article_teaser:
-                article_text = article_teaser.text.strip()
+                # Find the element with the class 'article-teaser'
+                article_teaser = full_article_soup.find('p', class_='article__teaser')
+                if article_teaser:
+                    article_text = article_teaser.text.strip()
 
-                # Get the title for the filename
-                article_title = full_article_soup.find('title').text.strip()
-                article_data.append((article_title, article_text))
+                    # Get the title for the filename
+                    article_title = full_article_soup.find('title').text.strip()
+                    
+                    article_data.append((article_title, article_text))
 
     return article_data
 
@@ -85,7 +88,7 @@ def main():
     if articles:
         for title, text in articles:
             save_article(title, text)
-            save_article_list.append(title)
+            save_article_list.append(title + '.txt')
     else:
         print('No articles found.')
 
